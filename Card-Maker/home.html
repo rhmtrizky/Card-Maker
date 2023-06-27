@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Maker</title>
+    <link rel="stylesheet" href="studyCaseJS.css">
+   
+</head>
+<body>
+    <h2>SILAHKAN ISI FORM DIBAWAH UNTUK MEMBUAT CARD ANDA</h2>
+    <div class="col">
+        <form action="#" onsubmit="renderCard(event)">
+            <fieldset style="font-family:Helvetica neue">
+                Name : <br>
+                <input type="text" id="name" placeholder="Name"> <br>
+                <br>
+                Card Name : *maks 3 kata. <br>
+                <input type="text" id="nameCard" placeholder="exp: Kartu Tanda Tanya"> <br>
+                <br>
+                Job : <br>
+                <input type="text" id="job" placeholder="Job"> <br>
+                <br>
+                Email : <br>
+                <input type="email" id="email" placeholder="example@gmail.com"> <br>
+                <br>
+                Phone Number : <br>
+                <input type="text" id="telp" placeholder="01234567"> <br>
+                <br>
+                Image : <br>
+                <input type="file" accept="image/*" id="gambarInput"> <br>
+                <br>
+                address : <br>
+                <textarea name="address" id="address" cols="25" rows="6" placeholder="Address"></textarea> <br>
+                <br>
+                <input type="submit" name="submit" value="Submit">
+                <input type="reset" name="reset" value="reset">
+            </fieldset>
+        </form>
+    </div>
+    
+    <script>
+    function renderCard(event) {
+    event.preventDefault();
+    var div = document.createElement("div");
+
+    var name = document.getElementById('name').value;
+    var nameCard = document.getElementById('nameCard').value;
+    var job = document.getElementById('job').value;
+    var email = document.getElementById('email').value;
+    var telp = document.getElementById('telp').value;
+    var gambarInput = document.getElementById('gambarInput').files[0]; // Mengambil berkas gambar yang diunggah
+    var address = document.getElementById('address').value;
+
+    var reader = new FileReader(); // Objek FileReader untuk membaca berkas gambar
+
+    reader.onload = function(e) {
+        var img = document.createElement('img');
+        img.src = e.target.result;
+        img.className = 'cardheading'; // Menambahkan kelas CSS untuk gaya
+        div.appendChild(img); // Menambahkan elemen gambar ke dalam kartu
+    };
+
+    div.innerHTML += `
+        <div class="card">
+            <div class="col">
+                <div class="card-content">
+                    <div class="head">
+                        <img class="cardheidingimg" src="${URL.createObjectURL(gambarInput)}">
+                        <p class="cardheading">${name}</p>
+                        <p class="job">${job}</p>
+                    </div>
+                    <div class="container">
+                        <h3>${nameCard}</h3>
+                        <div class="cardbio">
+                            <p class="cardcontainer">${email}</p>
+                            <p class="cardcontainer">${telp}</p>
+                            <p class="cardcontainer">${address}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(div);
+    }
+    </script>
+</body>
+</html>
